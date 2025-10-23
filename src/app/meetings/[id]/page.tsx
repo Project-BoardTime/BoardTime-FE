@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useParams } from "next/navigation"; // URL 파라미터를 가져오기 위한 훅
+import { useParams } from "next/navigation";
+import VoteForm from "@/components/VoteForm";
 
 // API 응답 데이터 타입을 정의 (TypeScript)
 interface MeetingDetails {
@@ -43,6 +44,7 @@ export default function MeetingPage() {
         }
         const data: MeetingDetails = await response.json();
         setMeeting(data);
+        console.log("meeting.isExpired", data.isExpired);
       } catch (err: unknown) {
         // 👈 err의 타입을 unknown으로 변경
         // err의 실제 타입이 Error 클래스의 인스턴스인지 확인
@@ -87,12 +89,8 @@ export default function MeetingPage() {
           {/* TODO: 결과 표시 컴포넌트 구현 */}
         </div>
       ) : (
-        // 마감 전: 투표 컴포넌트 (임시)
-        <div className="text-center p-4 bg-green-700 rounded-lg">
-          <h3 className="text-xl font-semibold mb-2">투표하기</h3>
-          <p>(투표 UI가 여기에 표시됩니다)</p>
-          {/* TODO: 투표 컴포넌트 구현 */}
-        </div>
+        // 마감 전: VoteForm 컴포넌트 렌더링
+        <VoteForm meetingId={meeting._id} dateOptions={meeting.dateOptions} />
       )}
 
       {/* 여기에 마감일, 날짜 옵션 목록 등을 추가로 표시할 수 있습니다. */}
