@@ -144,7 +144,7 @@ export default function VoteForm({ meetingId, dateOptions }: VoteFormProps) {
               : "bg-white text-green-700 hover:bg-green-100"
           }`}
         >
-          {isSubmitting ? "제출 중..." : "투표하기 / 수정하기"}
+          {isSubmitting ? "제출 중..." : "투표 제출"}
         </button>
       </form>
     </div>
