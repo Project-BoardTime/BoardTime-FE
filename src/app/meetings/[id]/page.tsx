@@ -32,13 +32,13 @@ export default function MeetingPage() {
       setLoading(true);
       setError(null);
       try {
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/api/meetings/${id}`
-        );
-
         // const response = await fetch(
-        //   `/api/be/meetings/${id}` // 새 방식, rewrite 경로 사용
+        //   `${process.env.NEXT_PUBLIC_API_URL}/api/meetings/${id}`
         // );
+
+        const response = await fetch(
+          `/api/be/meetings/${id}` // 새 방식, rewrite 경로 사용
+        );
         if (!response.ok) {
           throw new Error("모임 정보를 불러오는데 실패했습니다.");
         }
