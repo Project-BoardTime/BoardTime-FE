@@ -112,8 +112,8 @@ export default function HomePage() {
       handleCloseModal(); // 모달 닫기
       // TODO: '/manage' 경로는 아직 없으므로, 일단 상세 페이지로 이동하도록 설정
       // 나중에 관리 페이지 구현 후 경로 수정 필요
-      router.push(`/meetings/${selectedMeetingId}`);
-      // router.push(`/meetings/${selectedMeetingId}/manage`);
+      // router.push(`/meetings/${selectedMeetingId}`);
+      router.push(`/meetings/${selectedMeetingId}/manage`);
     } catch (error: unknown) {
       // --- 인증 실패 ---
       setAuthError(error instanceof Error ? error.message : "알 수 없는 오류");
