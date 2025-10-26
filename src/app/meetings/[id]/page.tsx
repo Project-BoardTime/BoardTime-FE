@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import VoteForm from "@/components/VoteForm";
+import ResultDisplay from "@/components/ResultDisplay";
 
 // API 응답 데이터 타입을 정의 (TypeScript)
 interface MeetingDetails {
@@ -82,12 +83,11 @@ export default function MeetingPage() {
       <p className="mb-6 text-center">{meeting.description}</p>
 
       {meeting.isExpired ? (
-        // 마감 후: 결과 표시 컴포넌트 (임시)
-        <div className="text-center p-4 bg-gray-700 rounded-lg">
-          <h3 className="text-xl font-semibold mb-2">투표 결과</h3>
-          <p>(결과 UI가 여기에 표시됩니다)</p>
-          {/* TODO: 결과 표시 컴포넌트 구현 */}
-        </div>
+        // 마감 후: ResultDisplay 컴포넌트 렌더링
+        <ResultDisplay
+          meetingId={meeting._id}
+          dateOptions={meeting.dateOptions}
+        />
       ) : (
         // 마감 전: VoteForm 컴포넌트 렌더링
         <VoteForm meetingId={meeting._id} dateOptions={meeting.dateOptions} />
