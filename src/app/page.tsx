@@ -132,14 +132,16 @@ export default function HomePage() {
 
   // JSX 렌더링 시작
   return (
-    // Fragment 사용: page.tsx는 layout.tsx의 children이므로 최상위 태그 불필요
+    // Fragment 사용
     <Fragment>
-      {/* 파란색 카드 UI 시작 (layout.tsx 안쪽 컨텐츠) */}
-      <div className="relative z-10 w-full max-w-md mx-auto p-8 bg-board-primary text-board-light rounded-2xl shadow-lg">
+      {/* --- 카드 UI (layout.tsx 안쪽 컨텐츠) --- */}
+      {/* ✨ 배경: board-light, 텍스트: board-dark, 테두리: board-secondary, 그림자: shadow-lg */}
+      <div className="relative z-10 w-full max-w-md mx-auto p-8 bg-board-light text-board-dark border border-board-secondary rounded-2xl shadow-lg">
         {/* 모임 생성 버튼 영역 */}
         <div className="mb-12">
           <Link href="/create" className="w-full block">
-            <button className="w-full bg-board-light text-board-dark font-bold py-3 px-4 rounded-lg hover:bg-board-secondary transition-colors duration-300">
+            {/* ✨ 버튼 스타일: 배경 accent-green, 텍스트 dark */}
+            <button className="w-full bg-board-secondary text-board-dark font-bold py-3 px-4 rounded-lg hover:bg-board-primary transition-colors duration-300 shadow-sm">
               새로운 모임 생성하기
             </button>
           </Link>
@@ -150,7 +152,7 @@ export default function HomePage() {
           {/* 라벨 */}
           <label
             htmlFor="meeting-search"
-            className="block text-sm font-medium mb-2 text-board-light"
+            className="block text-sm font-medium mb-2 text-board-dark" // ✨ 텍스트 색상 변경
           >
             내 모임 찾기
           </label>
@@ -161,21 +163,23 @@ export default function HomePage() {
               id="meeting-search"
               type="text"
               placeholder="모임 이름 또는 ID 입력"
-              className="flex-grow p-3 rounded-lg text-board-dark border border-board-secondary focus:ring-2 focus:ring-board-accent-gold"
+              // ✨ 입력창 스타일: 배경 white, 테두리 secondary, 포커스 accent-gold
+              className="flex-grow p-3 rounded-lg text-board-dark border border-board-secondary focus:ring-2 focus:ring-board-accent-gold bg-white shadow-sm"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               required
-              disabled={isSearching} // 검색 중 비활성화
+              disabled={isSearching}
             />
             {/* 찾기 버튼 */}
             <button
               type="submit"
-              className={`font-bold py-3 px-5 rounded-lg transition-colors duration-300 ${
+              // ✨ 버튼 스타일: 배경 accent-green, 비활성화 secondary
+              className={`font-bold py-3 px-5 rounded-lg transition-colors duration-300 shadow-sm ${
                 isSearching
-                  ? "bg-board-secondary text-board-light cursor-not-allowed" // 비활성화 스타일
-                  : "bg-board-accent-green hover:bg-board-accent-green/80 text-board-dark" // 활성화 스타일
+                  ? "bg-board-secondary/50 text-board-dark/70 cursor-not-allowed"
+                  : "bg-board-secondary hover:bg-board-primary text-board-dark"
               }`}
-              disabled={isSearching} // 검색 중 비활성화
+              disabled={isSearching}
             >
               {isSearching ? "검색중..." : "찾기"}
             </button>
@@ -183,29 +187,28 @@ export default function HomePage() {
 
           {/* 검색 결과 안내 메시지 */}
           {searchMessage && (
-            <p className="text-center text-sm mt-4 text-board-light">
+            <p className="text-center text-sm mt-4 text-board-dark/80">
+              {" "}
+              {/* ✨ 텍스트 색상 변경 */}
               {searchMessage}
             </p>
           )}
 
-          {/* 검색 결과 목록 (결과가 여러 개일 때만 표시) */}
+          {/* 검색 결과 목록 */}
           {searchResults.length > 1 && (
             <div className="mt-6 w-full border-t border-board-secondary pt-4">
               {" "}
-              {/* 구분선 */}
+              {/* ✨ 테두리 색상 변경 */}
               <ul className="space-y-2 max-h-32 overflow-y-auto">
-                {" "}
-                {/* 스크롤 가능한 목록 */}
                 {searchResults.map((meeting) => (
-                  // 각 모임 항목
+                  // ✨ 각 모임 항목 스타일: 배경 light(살짝 연하게), 테두리 secondary, 그림자 sm
                   <li
                     key={meeting._id}
-                    className="bg-board-secondary p-2 rounded hover:bg-board-secondary/80"
+                    className="bg-board-light/80 border border-board-secondary p-2 rounded hover:bg-board-light transition-colors duration-200 shadow-sm" // ✨ 그림자 추가
                   >
-                    {/* 모임 제목 버튼 (클릭 시 모달 열기) */}
                     <button
                       onClick={() => handleOpenModal(meeting._id)}
-                      className="text-board-light text-sm cursor-pointer block w-full text-left"
+                      className="text-board-dark text-sm cursor-pointer block w-full text-left" // ✨ 텍스트 색상 변경
                     >
                       {meeting.title}
                     </button>
@@ -216,27 +219,28 @@ export default function HomePage() {
           )}
         </div>
       </div>
-      {/* 파란색 카드 UI 끝 */}
+      {/* --- 카드 UI 끝 --- */}
 
-      {/* --- 인증 모달 UI (isModalOpen 상태에 따라 조건부 렌더링) --- */}
+      {/* --- 인증 모달 UI (스타일 적용) --- */}
       {isModalOpen && (
-        // 모달 배경 (어둡게 처리)
+        // 모달 배경
         <div
-          className="fixed inset-0 bg-board-dark/70 flex items-center justify-center z-40 p-4"
-          onClick={handleCloseModal} // 배경 클릭 시 모달 닫기
+          className="fixed inset-0 bg-board-dark/70 flex items-center justify-center z-40 p-4" // ✨ 배경색 변경
+          onClick={handleCloseModal}
         >
-          {/* 모달 창 (컨텐츠) */}
+          {/* 모달 창 */}
+          {/* ✨ 배경 light, 텍스트 dark, 테두리 secondary, 그림자 xl */}
           <div
-            className="bg-board-light p-6 rounded-lg shadow-xl z-50 w-full max-w-xs relative text-board-dark"
-            onClick={(e) => e.stopPropagation()} // 모달 내부 클릭 시 닫히지 않도록 이벤트 전파 중지
+            className="bg-board-light p-6 rounded-lg shadow-xl z-50 w-full max-w-xs relative text-board-dark border border-board-secondary" // ✨ 테두리, 그림자 추가
+            onClick={(e) => e.stopPropagation()}
           >
             {/* 닫기 버튼 */}
             <button
               onClick={handleCloseModal}
-              className="absolute top-2 right-3 text-board-dark/60 hover:text-board-dark text-2xl font-bold"
+              className="absolute top-2 right-3 text-board-dark/60 hover:text-board-dark text-2xl font-bold" // ✨ 색상 변경
               aria-label="닫기"
             >
-              &times; {/* 'X' 아이콘 */}
+              &times;
             </button>
 
             {/* 모달 제목 */}
@@ -245,6 +249,8 @@ export default function HomePage() {
             </h3>
             {/* 안내 문구 */}
             <p className="text-sm text-board-dark/80 mb-4 text-center">
+              {" "}
+              {/* ✨ 색상 변경 */}
               모임을 관리하려면
               <br />
               생성 시 설정한 비밀번호를 입력하세요.
@@ -257,25 +263,29 @@ export default function HomePage() {
                 value={passwordInput}
                 onChange={(e) => setPasswordInput(e.target.value)}
                 required
-                className="w-full p-2 border border-board-secondary rounded mb-4 focus:ring-2 focus:ring-board-accent-gold text-board-dark"
+                // ✨ 입력창 스타일: 배경 white, 테두리 secondary, 포커스 accent-gold
+                className="w-full p-2 border border-board-secondary rounded mb-4 focus:ring-2 focus:ring-board-accent-gold text-board-dark bg-white shadow-sm"
                 placeholder="비밀번호 입력"
-                disabled={isAuthenticating} // 인증 중 비활성화
+                disabled={isAuthenticating}
               />
-              {/* 인증 에러 메시지 표시 */}
+              {/* 인증 에러 메시지 */}
               {authError && (
                 <p className="text-red-600 text-xs text-center mb-4">
+                  {" "}
+                  {/* 오류 색상은 유지 */}
                   {authError}
                 </p>
               )}
               {/* 확인 버튼 */}
               <button
                 type="submit"
-                className={`w-full font-bold py-2 px-4 rounded transition-colors duration-300 ${
+                // ✨ 버튼 스타일: 배경 accent-green, 비활성화 secondary
+                className={`w-full font-bold py-2 px-4 rounded transition-colors duration-300 shadow-sm ${
                   isAuthenticating
-                    ? "bg-board-secondary/50 cursor-not-allowed text-board-dark/80" // 비활성화 스타일
-                    : "bg-board-accent-green hover:bg-board-accent-green/80 text-board-dark" // 활성화 스타일
+                    ? "bg-board-secondary/50 cursor-not-allowed text-board-dark/80" // 비활성화
+                    : "bg-board-secondary hover:bg-board-primary text-board-dark" // 활성화
                 }`}
-                disabled={isAuthenticating} // 인증 중 비활성화
+                disabled={isAuthenticating}
               >
                 {isAuthenticating ? "확인 중..." : "확인"}
               </button>
@@ -284,6 +294,6 @@ export default function HomePage() {
         </div>
       )}
       {/* --- 모달 UI 끝 --- */}
-    </Fragment> // Fragment 끝
+    </Fragment>
   );
 } // HomePage 컴포넌트 끝

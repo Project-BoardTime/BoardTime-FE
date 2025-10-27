@@ -119,31 +119,33 @@ export default function CreateMeetingPage() {
   if (createdMeetingId) {
     const shareableLink = `${window.location.origin}/meetings/${createdMeetingId}`;
     return (
-      // 🎨 컨테이너 스타일 (배경은 layout에서 처리)
-      <div className="text-center text-board-light">
-        {" "}
-        {/* 🎨 기본 텍스트 색상 변경 */}
+      // ✨ 배경은 layout에서 처리, 기본 텍스트 색상만 설정
+      <div className="text-center text-board-dark">
         <h2 className="text-2xl font-bold mb-4">🎉 모임 생성 완료! 🎉</h2>
-        <p className="mb-6">아래 링크를 참여자들에게 공유하세요.</p>
-        <div className="mb-4">
+        <p className="mb-6 text-board-dark/80">
+          아래 링크를 참여자들에게 공유하세요.
+        </p>
+        {/* ✨ 링크 표시 영역: 옅은 배경, 테두리, 그림자 */}
+        <div className="mb-4 bg-board-light border border-board-secondary p-2 rounded shadow-sm">
           <input
             type="text"
             value={shareableLink}
             readOnly
-            className="w-full p-2 border border-board-secondary rounded bg-board-light text-board-dark text-sm text-center" // 🎨 링크 필드 색상 변경
+            // ✨ 내부 input 배경 투명, 테두리 없음
+            className="w-full p-1 bg-transparent text-board-dark text-sm text-center outline-none border-none"
             onClick={(e) => e.currentTarget.select()}
           />
         </div>
+        {/* ✨ 버튼 색상 변경 (액센트) */}
         <button
           onClick={handleCopyLink}
-          className="w-full bg-board-light text-board-dark font-bold py-2 px-4 rounded-lg hover:bg-board-secondary transition-colors duration-300 mb-2" // 🎨 버튼 색상 변경
+          className="w-full bg-board-secondary text-board-dark font-bold py-2 px-4 rounded-lg hover:bg-board-primary transition-colors duration-300 mb-2 shadow-sm"
         >
           {copySuccess ? "✅ 복사 완료!" : "🔗 링크 복사하기"}
         </button>
+        {/* ✨ 링크 색상 변경 */}
         <Link href={`/meetings/${createdMeetingId}`}>
           <span className="text-sm text-board-secondary hover:underline cursor-pointer">
-            {" "}
-            {/* 🎨 링크 텍스트 색상 변경 */}
             생성된 모임 확인하기 &rarr;
           </span>
         </Link>
@@ -151,24 +153,27 @@ export default function CreateMeetingPage() {
     );
   }
 
-  // createdMeetingId 상태가 null이면 (생성 전 또는 실패 시) 기존 폼 UI를 보여줍니다.
+  // 렌더링 로직 (폼 부분 - 생성 전)
   return (
-    // 🎨 Fragment 유지 (배경은 layout에서 처리)
+    // ✨ Fragment 유지 (배경/카드 틀은 layout에서 처리)
     <>
-      <h2 className="text-3xl font-bold mb-6 text-center text-board-light">
+      {/* ✨ 제목 텍스트 색상 변경 */}
+      <h2 className="text-3xl font-bold mb-6 text-center text-board-dark">
         새로운 모임 만들기
-      </h2>{" "}
-      {/* 🎨 텍스트 색상 변경 */}
+      </h2>
       <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
-        {/* 모임 제목 */}
-        <div>
+        {/* --- ⬇️ 각 입력 필드 그룹을 카드로 스타일링 ⬇️ --- */}
+        {/* 모임 제목 카드 */}
+        <div className="p-4 bg-board-light border border-board-secondary rounded-lg shadow-sm">
+          {" "}
+          {/* ✨ 카드 스타일 */}
           <label
             htmlFor="title"
-            className="block text-sm font-medium mb-1 text-board-light"
+            className="block text-sm font-medium mb-1 text-board-dark"
           >
             모임 제목
           </label>{" "}
-          {/* 🎨 텍스트 색상 변경 */}
+          {/* ✨ 텍스트 색상 */}
           <input
             id="title"
             name="title"
@@ -176,38 +181,44 @@ export default function CreateMeetingPage() {
             required
             value={formData.title}
             onChange={handleChange}
-            className="w-full p-3 rounded-lg text-board-dark border border-board-secondary focus:ring-2 focus:ring-board-accent-gold" // 🎨 입력 필드 색상 변경
+            // ✨ 입력 필드 스타일: 흰 배경, 연한 테두리
+            className="w-full p-2 rounded-md text-board-dark border border-board-secondary/50 focus:ring-2 focus:ring-board-accent-gold bg-white"
             placeholder="예: 프로젝트 회의 일정 조율"
           />
         </div>
-        {/* 설명 */}
-        <div>
+        {/* 설명 카드 */}
+        <div className="p-4 bg-board-light border border-board-secondary rounded-lg shadow-sm">
+          {" "}
+          {/* ✨ 카드 스타일 */}
           <label
             htmlFor="description"
-            className="block text-sm font-medium mb-1 text-board-light"
+            className="block text-sm font-medium mb-1 text-board-dark"
           >
             설명 (선택)
           </label>{" "}
-          {/* 🎨 텍스트 색상 변경 */}
+          {/* ✨ 텍스트 색상 */}
           <textarea
             id="description"
             name="description"
             rows={3}
             value={formData.description}
             onChange={handleChange}
-            className="w-full p-3 rounded-lg text-board-dark border border-board-secondary focus:ring-2 focus:ring-board-accent-gold" // 🎨 입력 필드 색상 변경
+            // ✨ 입력 필드 스타일: 흰 배경, 연한 테두리
+            className="w-full p-2 rounded-md text-board-dark border border-board-secondary/50 focus:ring-2 focus:ring-board-accent-gold bg-white"
             placeholder="모임에 대한 간단한 설명을 입력하세요."
           />
         </div>
-        {/* 비밀번호 */}
-        <div>
+        {/* 비밀번호 카드 */}
+        <div className="p-4 bg-board-light border border-board-secondary rounded-lg shadow-sm">
+          {" "}
+          {/* ✨ 카드 스타일 */}
           <label
             htmlFor="password"
-            className="block text-sm font-medium mb-1 text-board-light"
+            className="block text-sm font-medium mb-1 text-board-dark"
           >
             비밀번호
           </label>{" "}
-          {/* 🎨 텍스트 색상 변경 */}
+          {/* ✨ 텍스트 색상 */}
           <input
             id="password"
             name="password"
@@ -215,19 +226,22 @@ export default function CreateMeetingPage() {
             required
             value={formData.password}
             onChange={handleChange}
-            className="w-full p-3 rounded-lg text-board-dark border border-board-secondary focus:ring-2 focus:ring-board-accent-gold" // 🎨 입력 필드 색상 변경
+            // ✨ 입력 필드 스타일: 흰 배경, 연한 테두리
+            className="w-full p-2 rounded-md text-board-dark border border-board-secondary/50 focus:ring-2 focus:ring-board-accent-gold bg-white"
             placeholder="모임 수정/삭제 시 사용"
           />
         </div>
-        {/* 날짜 옵션 */}
-        <div>
+        {/* 날짜 옵션 카드 */}
+        <div className="p-4 bg-board-light border border-board-secondary rounded-lg shadow-sm">
+          {" "}
+          {/* ✨ 카드 스타일 */}
           <label
             htmlFor="dateOptionsText"
-            className="block text-sm font-medium mb-1 text-board-light"
+            className="block text-sm font-medium mb-1 text-board-dark"
           >
             날짜 옵션 (콤마로 구분)
           </label>{" "}
-          {/* 🎨 텍스트 색상 변경 */}
+          {/* ✨ 텍스트 색상 */}
           <input
             id="dateOptionsText"
             name="dateOptionsText"
@@ -236,22 +250,25 @@ export default function CreateMeetingPage() {
             placeholder="예: 2025-10-25 14:00, 2025-10-26 15:00"
             value={formData.dateOptionsText}
             onChange={handleChange}
-            className="w-full p-3 rounded-lg text-board-dark border border-board-secondary focus:ring-2 focus:ring-board-accent-gold" // 🎨 입력 필드 색상 변경
+            // ✨ 입력 필드 스타일: 흰 배경, 연한 테두리
+            className="w-full p-2 rounded-md text-board-dark border border-board-secondary/50 focus:ring-2 focus:ring-board-accent-gold bg-white"
           />
-          <p className="text-xs text-board-light/70 mt-1">
+          <p className="text-xs text-board-dark/70 mt-1">
             정확한 날짜와 시간(YYYY-MM-DD HH:MM) 형식으로 입력해주세요.
           </p>{" "}
-          {/* 🎨 보조 텍스트 색상 변경 */}
+          {/* ✨ 보조 텍스트 색상 */}
         </div>
-        {/* 마감일 */}
-        <div>
+        {/* 마감일 카드 */}
+        <div className="p-4 bg-board-light border border-board-secondary rounded-lg shadow-sm">
+          {" "}
+          {/* ✨ 카드 스타일 */}
           <label
             htmlFor="deadline"
-            className="block text-sm font-medium mb-1 text-board-light"
+            className="block text-sm font-medium mb-1 text-board-dark"
           >
             투표 마감일
           </label>{" "}
-          {/* 🎨 텍스트 색상 변경 */}
+          {/* ✨ 텍스트 색상 */}
           <input
             id="deadline"
             name="deadline"
@@ -259,24 +276,27 @@ export default function CreateMeetingPage() {
             required
             value={formData.deadline}
             onChange={handleChange}
-            className="w-full p-3 rounded-lg text-board-dark border border-board-secondary focus:ring-2 focus:ring-board-accent-gold" // 🎨 입력 필드 색상 변경
+            // ✨ 입력 필드 스타일: 흰 배경, 연한 테두리
+            className="w-full p-2 rounded-md text-board-dark border border-board-secondary/50 focus:ring-2 focus:ring-board-accent-gold bg-white"
           />
         </div>
+        {/* --- ⬆️ 각 입력 필드 그룹 스타일링 끝 ⬆️ --- */}
         {/* 에러 메시지 */}
         {error && (
-          <p className="text-red-400 text-sm text-center py-1 bg-red-900/50 rounded">
+          <p className="text-red-600 text-sm text-center py-1 bg-red-100 border border-red-400 rounded">
             {error}
           </p>
         )}{" "}
-        {/* 🎨 에러 배경/텍스트 색상 조정 */}
+        {/* ✨ 에러 스타일 */}
         {/* 제출 버튼 */}
         <button
           type="submit"
           disabled={isSubmitting}
-          className={`w-full font-bold py-3 px-4 rounded-lg transition-colors duration-300 mt-6 ${
+          // ✨ 버튼 스타일: 배경 accent-green, 비활성화 secondary
+          className={`w-full font-bold py-3 px-4 rounded-lg transition-colors duration-300 mt-6 shadow-sm ${
             isSubmitting
-              ? "bg-board-secondary/50 text-board-light/70 cursor-not-allowed" // 🎨 비활성화 색상 변경
-              : "bg-board-light text-board-dark hover:bg-board-secondary" // 🎨 버튼 색상 변경
+              ? "bg-board-secondary/50 text-board-dark/70 cursor-not-allowed"
+              : "bg-board-secondary text-board-dark hover:bg-board-primary"
           }`}
         >
           {isSubmitting ? "생성 중..." : "모임 만들기"}

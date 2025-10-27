@@ -74,55 +74,58 @@ export default function VoteForm({ meetingId, dateOptions }: VoteFormProps) {
   };
 
   return (
-    <div className="w-full p-4 bg-green-700 rounded-lg">
-      <h3 className="text-xl font-semibold mb-4 text-center">투표하기</h3>
+    // ✨ 카드 스타일: 배경 light, 테두리 secondary, 그림자 md
+    <div className="w-full p-6 bg-board-light border border-board-secondary rounded-lg shadow-md text-board-dark">
+      <h3 className="text-xl font-semibold mb-5 text-center">투표하기</h3>
       <form onSubmit={handleSubmit} className="space-y-4">
+        {/* 닉네임 */}
         <div>
           <label htmlFor="nickname" className="block text-sm font-medium mb-1">
             닉네임
           </label>
           <input
-            id="nickname"
-            type="text"
-            required
-            value={nickname}
-            onChange={(e) => setNickname(e.target.value)}
-            className="w-full p-2 rounded-lg text-gray-800"
+            id="nickname" /* ... */
+            className="w-full p-2.5 rounded-md text-board-dark border border-board-secondary/50 focus:ring-2 focus:ring-board-accent-gold bg-white"
           />
         </div>
+        {/* 비밀번호 */}
         <div>
           <label htmlFor="password" className="block text-sm font-medium mb-1">
             비밀번호
           </label>
           <input
             id="password"
-            type="password"
-            required
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="w-full p-2 rounded-lg text-gray-800"
+            type="password" /* ... */
+            className="w-full p-2.5 rounded-md text-board-dark border border-board-secondary/50 focus:ring-2 focus:ring-board-accent-gold bg-white"
           />
         </div>
 
+        {/* 날짜 선택 */}
         <fieldset>
           <legend className="block text-sm font-medium mb-2">
             가능한 날짜 선택:
           </legend>
-          <div className="space-y-2">
+          <div className="space-y-2 max-h-40 overflow-y-auto pr-2">
             {dateOptions.map((option) => (
-              <div key={option._id} className="flex items-center">
+              // ✨ 항목 스타일: 배경 아주 연하게(white), 테두리 연하게
+              <div
+                key={option._id}
+                className="flex items-center bg-white border border-board-secondary/30 p-2 rounded shadow-sm"
+              >
                 <input
                   id={option._id}
-                  type="checkbox"
-                  value={option._id}
-                  checked={selectedDates.includes(option._id)}
-                  onChange={() => handleCheckboxChange(option._id)}
-                  className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500 mr-2"
+                  type="checkbox" /* ... */
+                  // ✨ 체크박스 색상 변경 (accent-gold)
+                  className="h-4 w-4 text-board-accent-gold border-board-secondary/50 rounded focus:ring-board-accent-gold mr-3 cursor-pointer"
                 />
-                <label htmlFor={option._id} className="text-sm">
-                  {new Date(option.date).toLocaleString("ko-KR", {
-                    dateStyle: "short",
-                    timeStyle: "short",
+                <label htmlFor={option._id} className="text-sm cursor-pointer">
+                  {new Date(option.date).toLocaleDateString("ko-KR", {
+                    year: "numeric",
+                    month: "short",
+                    day: "numeric",
+                    weekday: "short",
+                    hour: "numeric",
+                    minute: "numeric",
                   })}
                 </label>
               </div>
@@ -130,18 +133,26 @@ export default function VoteForm({ meetingId, dateOptions }: VoteFormProps) {
           </div>
         </fieldset>
 
-        {error && <p className="text-red-400 text-sm text-center">{error}</p>}
+        {error && (
+          <p className="text-red-600 text-xs text-center py-1 bg-red-100 border border-red-400 rounded">
+            {error}
+          </p>
+        )}
         {success && (
-          <p className="text-green-300 text-sm text-center">{success}</p>
+          <p className="text-green-600 text-xs text-center py-1 bg-green-100 border border-green-400 rounded">
+            {success}
+          </p>
         )}
 
+        {/* 제출 버튼 */}
         <button
           type="submit"
           disabled={isSubmitting}
-          className={`w-full font-bold py-2 px-4 rounded-lg transition-colors duration-300 mt-4 ${
+          // ✨ 버튼 색상 변경 (secondary)
+          className={`w-full font-bold py-2.5 px-4 rounded-md transition-all duration-300 mt-5 shadow-sm ${
             isSubmitting
-              ? "bg-gray-400 cursor-not-allowed"
-              : "bg-white text-green-700 hover:bg-green-100"
+              ? "bg-board-secondary/50 text-board-light/70 cursor-not-allowed"
+              : "bg-board-secondary text-board-light hover:bg-board-primary focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-board-light focus:ring-board-primary"
           }`}
         >
           {isSubmitting ? "제출 중..." : "투표 제출"}

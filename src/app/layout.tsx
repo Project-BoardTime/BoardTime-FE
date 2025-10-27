@@ -39,7 +39,8 @@ export default function RootLayout({
           <div className="w-full md:w-1/2 bg-board-dark flex items-center justify-center p-4">
             {/* --- ⬇️ 카드 스타일 적용 (틀 복원) ⬇️ --- */}
             {/* 이 div가 모바일/데스크톱 모두에서 보이는 '카드 틀' 역할 */}
-            <div className="relative z-10 w-full max-w-md mx-auto p-8 bg-board-primary text-board-light rounded-2xl shadow-lg min-h-[600px] flex flex-col justify-center">
+            {/* <div className="relative z-10 w-full max-w-md mx-auto p-8 bg-board-primary text-board-light rounded-2xl shadow-lg min-h-[600px] flex flex-col justify-center"> */}
+            <div className="relative z-10 w-full max-w-md mx-auto p-8 bg-white text-board-dark rounded-2xl shadow-lg min-h-[600px] flex flex-col justify-center">
               {" "}
               {/* ✨ 카드 배경색, 둥근 모서리, 그림자 등 스타일 적용 */}
               {/* ⭐️ 실제 페이지 내용({children})이 이 카드 안에 렌더링됩니다 ⭐️ */}
