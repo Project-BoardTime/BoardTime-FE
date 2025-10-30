@@ -39,8 +39,7 @@ export default function VoteForm({ meetingId, dateOptions }: VoteFormProps) {
 
     try {
       const response = await fetch(`/api/be/meetings/${meetingId}/votes`, {
-        // rewrite 경로 사용
-        method: "POST", // 또는 PUT, 백엔드 라우터 설정에 따라
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
@@ -52,16 +51,24 @@ export default function VoteForm({ meetingId, dateOptions }: VoteFormProps) {
       });
 
       if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || "투표 제출에 실패했습니다.");
+        // 백엔드 에러 메시지 파싱 시도
+        const errorData = await response
+          .json()
+          .catch(() => ({ error: "투표 제출 중 오류 발생" }));
+        throw new Error(
+          errorData.error || `HTTP error! status: ${response.status}`
+        );
       }
 
       const result = await response.json();
       setSuccess(result.message || "투표가 성공적으로 제출되었습니다!");
-      // 선택적으로 폼 초기화
-      // setNickname('');
-      // setPassword('');
-      // setSelectedDates([]);
+
+      // --- ⬇️ 폼 초기화 주석 해제 ⬇️ ---
+      // 투표 성공 시, 입력 필드와 선택된 날짜를 초기화합니다.
+      setNickname("");
+      setPassword("");
+      setSelectedDates([]);
+      // --- ⬆️ 폼 초기화 끝 ⬆️ ---
     } catch (err: unknown) {
       if (err instanceof Error) {
         setError(err.message);
@@ -74,7 +81,7 @@ export default function VoteForm({ meetingId, dateOptions }: VoteFormProps) {
   };
 
   return (
-    // ✨ 카드 스타일: 배경 light, 테두리 secondary, 그림자 md
+    // 카드 스타일: 배경 light, 테두리 secondary, 그림자 md
     <div className="w-full p-6 bg-board-light border border-board-secondary rounded-lg shadow-md text-board-dark">
       <h3 className="text-xl font-semibold mb-5 text-center">투표하기</h3>
       <form onSubmit={handleSubmit} className="space-y-4">
@@ -84,8 +91,13 @@ export default function VoteForm({ meetingId, dateOptions }: VoteFormProps) {
             닉네임
           </label>
           <input
-            id="nickname" /* ... */
+            id="nickname"
+            type="text"
+            required // ✨ 필수 입력
+            value={nickname} // ✨ 상태와 값 바인딩
+            onChange={(e) => setNickname(e.target.value)} // ✨ 변경 시 상태 업데이트
             className="w-full p-2.5 rounded-md text-board-dark border border-board-secondary/50 focus:ring-2 focus:ring-board-accent-gold bg-white"
+            placeholder="참여할 닉네임" // ✨ placeholder 추가
           />
         </div>
         {/* 비밀번호 */}
@@ -95,8 +107,12 @@ export default function VoteForm({ meetingId, dateOptions }: VoteFormProps) {
           </label>
           <input
             id="password"
-            type="password" /* ... */
+            type="password"
+            required // ✨ 필수 입력
+            value={password} // ✨ 상태와 값 바인딩
+            onChange={(e) => setPassword(e.target.value)} // ✨ 변경 시 상태 업데이트
             className="w-full p-2.5 rounded-md text-board-dark border border-board-secondary/50 focus:ring-2 focus:ring-board-accent-gold bg-white"
+            placeholder="투표 수정/확인용" // ✨ placeholder 추가
           />
         </div>
 
@@ -107,15 +123,17 @@ export default function VoteForm({ meetingId, dateOptions }: VoteFormProps) {
           </legend>
           <div className="space-y-2 max-h-40 overflow-y-auto pr-2">
             {dateOptions.map((option) => (
-              // ✨ 항목 스타일: 배경 아주 연하게(white), 테두리 연하게
+              // 항목 스타일: 배경 아주 연하게(white), 테두리 연하게
               <div
                 key={option._id}
                 className="flex items-center bg-white border border-board-secondary/30 p-2 rounded shadow-sm"
               >
                 <input
                   id={option._id}
-                  type="checkbox" /* ... */
-                  // ✨ 체크박스 색상 변경 (accent-gold)
+                  type="checkbox"
+                  value={option._id}
+                  checked={selectedDates.includes(option._id)}
+                  onChange={() => handleCheckboxChange(option._id)}
                   className="h-4 w-4 text-board-accent-gold border-board-secondary/50 rounded focus:ring-board-accent-gold mr-3 cursor-pointer"
                 />
                 <label htmlFor={option._id} className="text-sm cursor-pointer">
@@ -133,6 +151,7 @@ export default function VoteForm({ meetingId, dateOptions }: VoteFormProps) {
           </div>
         </fieldset>
 
+        {/* 에러 및 성공 메시지 */}
         {error && (
           <p className="text-red-600 text-xs text-center py-1 bg-red-100 border border-red-400 rounded">
             {error}
@@ -148,7 +167,7 @@ export default function VoteForm({ meetingId, dateOptions }: VoteFormProps) {
         <button
           type="submit"
           disabled={isSubmitting}
-          // ✨ 버튼 색상 변경 (secondary)
+          // 버튼 색상 변경 (secondary)
           className={`w-full font-bold py-2.5 px-4 rounded-md transition-all duration-300 mt-5 shadow-sm ${
             isSubmitting
               ? "bg-board-secondary/50 text-board-light/70 cursor-not-allowed"

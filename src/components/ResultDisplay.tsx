@@ -128,7 +128,7 @@ export default function ResultDisplay({
             {/* 배경 white, 테두리 연하게, 그림자 sm */}
             {/* 날짜 및 득표 수 표시 영역 (클릭 가능) */}
             <div
-              className="flex justify-between items-center cursor-pointer hover:bg-gray-50 p-1 rounded transition-colors duration-200" // 호버 효과
+              className="flex justify-between items-center cursor-pointer hover:bg-gray-50 p-0.8 rounded transition-colors duration-200" // 호버 효과
               onClick={() => fetchVoters(optionId)} // 클릭 시 fetchVoters 함수 호출
             >
               {/* 날짜 텍스트 */}

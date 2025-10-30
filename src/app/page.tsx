@@ -174,7 +174,7 @@ export default function HomePage() {
             <button
               type="submit"
               // ✨ 버튼 스타일: 배경 accent-green, 비활성화 secondary
-              className={`font-bold py-3 px-5 rounded-lg transition-colors duration-300 shadow-sm ${
+              className={`p-2 bg-board-secondary text-board-light rounded-md hover:bg-board-primary text-sm whitespace-nowrap ${
                 isSearching
                   ? "bg-board-secondary/50 text-board-dark/70 cursor-not-allowed"
                   : "bg-board-secondary hover:bg-board-primary text-board-dark"
@@ -187,7 +187,7 @@ export default function HomePage() {
 
           {/* 검색 결과 안내 메시지 */}
           {searchMessage && (
-            <p className="text-center text-sm mt-4 text-board-dark/80">
+            <p className="text-sm mt-4 text-board-dark/80">
               {" "}
               {/* ✨ 텍스트 색상 변경 */}
               {searchMessage}
