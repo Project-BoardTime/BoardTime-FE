@@ -136,7 +136,7 @@ export default function HomePage() {
     <Fragment>
       {/* --- 카드 UI (layout.tsx 안쪽 컨텐츠) --- */}
       {/* ✨ 배경: board-light, 텍스트: board-dark, 테두리: board-secondary, 그림자: shadow-lg */}
-      <div className="relative z-10 w-full max-w-md mx-auto p-8 bg-board-light text-board-dark border border-board-secondary rounded-2xl shadow-lg">
+      <div className="relative z-10 w-full max-w-md mx-auto p-8 mb-8 bg-board-light text-board-dark border border-board-secondary rounded-2xl shadow-lg">
         {/* 모임 생성 버튼 영역 */}
         <div className="mb-12">
           <Link href="/create" className="w-full block">

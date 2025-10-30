@@ -106,7 +106,7 @@ export default function MeetingPage() {
 
       {/* 마감일 표시 */}
       {/* ✨ 텍스트 색상 변경 (연하게) */}
-      <p className="mt-6 text-sm text-center text-board-dark/70">
+      <p className="mt-6 mb-8 text-sm text-center text-board-dark/70">
         투표 마감:{" "}
         {new Date(meeting.deadline).toLocaleString("ko-KR", {
           year: "numeric",
