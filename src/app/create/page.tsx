@@ -193,7 +193,7 @@ export default function CreateMeetingPage() {
       {/* --- 스크롤 가능한 폼 영역 --- */}
       {/* flex-grow: 남은 세로 공간 모두 차지, overflow-y-auto: 내용 넘치면 세로 스크롤 */}
       {/* pr-2: 스크롤바 위한 오른쪽 여백, pb-20: 하단 고정 버튼 위한 아래쪽 여백 */}
-      <div className="flex-grow overflow-y-auto pr-2 pt-20 pb-10">
+      <div className="flex-grow overflow-y-auto pr-2 pt-4 pb-4">
         {/* form 태그는 스크롤 영역 내부에 위치 */}
         {/* handleSubmit은 버튼 onClick에서 처리하므로 form 태그 자체에는 onSubmit 불필요 */}
         <form
@@ -360,7 +360,7 @@ export default function CreateMeetingPage() {
       {/* sticky: 스크롤 영역(.flex-grow) 내에서 고정, bottom-0: 아래쪽 */}
       {/* left-0 right-0: 부모 너비만큼, p-4 bg-board-light: 배경/패딩, border-t: 상단 구분선 */}
       {/* mt-auto: flex-grow 요소가 남은 공간을 다 차지하게 하여 버튼을 아래로 밀어냄 */}
-      <div className="sticky bottom-0 left-0 right-0 p-4 bg-white mt-auto mr-2">
+      <div className="sticky bottom-0 left-0 right-0 px-4 pt-4 pb-12 bg-white mt-auto mr-2">
         <button
           type="button" // form 태그 밖에 있으므로 type="button"
           // onClick: 가상 이벤트 생성 및 handleSubmit 호출 (이전 설명과 동일)
