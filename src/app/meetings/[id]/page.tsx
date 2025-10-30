@@ -60,20 +60,22 @@ export default function MeetingPage() {
   // 로딩 중 표시
   if (loading) {
     // ✨ 텍스트 색상 변경
-    return <div className="text-center text-board-dark/70">로딩 중...</div>;
+    return (
+      <div className="text-center text-board-dark/70 mb-8">로딩 중...</div>
+    );
   }
 
   // 에러 발생 시 표시
   if (error) {
     // ✨ 에러 색상 유지 또는 text-red-600 등으로 변경 가능
-    return <div className="text-center text-red-600">오류: {error}</div>;
+    return <div className="text-center text-red-600 mb-8">오류: {error}</div>;
   }
 
   // 모임 데이터 없을 시 표시
   if (!meeting) {
     // ✨ 텍스트 색상 변경
     return (
-      <div className="text-center text-board-dark/70">
+      <div className="text-center text-board-dark/70 mb-8">
         모임 정보를 찾을 수 없습니다.
       </div>
     );
@@ -106,7 +108,7 @@ export default function MeetingPage() {
 
       {/* 마감일 표시 */}
       {/* ✨ 텍스트 색상 변경 (연하게) */}
-      <p className="mt-6 mb-8 text-sm text-center text-board-dark/70">
+      <p className="mt-6 text-sm text-center text-board-dark/70 mb-8">
         투표 마감:{" "}
         {new Date(meeting.deadline).toLocaleString("ko-KR", {
           year: "numeric",
