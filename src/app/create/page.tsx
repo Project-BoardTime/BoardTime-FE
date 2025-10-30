@@ -150,7 +150,7 @@ export default function CreateMeetingPage() {
   if (createdMeetingId) {
     const shareableLink = `${window.location.origin}/meetings/${createdMeetingId}`;
     return (
-      <div className="text-center text-board-dark">
+      <div className="text-center text-board-dark pb-4">
         <h2 className="text-2xl font-bold mb-4">🎉 모임 생성 완료! 🎉</h2>
         <p className="mb-6 text-board-dark/80">
           아래 링크를 참여자들에게 공유하세요.
