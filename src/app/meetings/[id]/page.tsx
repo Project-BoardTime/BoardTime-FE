@@ -92,7 +92,9 @@ export default function MeetingPage() {
       </h2>
       {/* 모임 설명 */}
       {/* ✨ 텍스트 색상 변경 (약간 연하게) */}
-      <p className="mb-6 text-board-dark/80">{meeting.description}</p>
+      <p className="mb-6 text-board-dark/80 whitespace-pre-line">
+        {meeting.description}
+      </p>
 
       {/* 마감 여부에 따라 투표 폼 또는 결과 표시 */}
       {meeting.isExpired ? (
